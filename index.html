@@ -9,23 +9,26 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
+<body onload=init()>
     <div class="page-container">
         <header>
             <div class="container flex space-between align-center">
                 <div class="logo">TravelTip</div>
                 <div class="location-container flex space-between">
                     <input class="enter-location" placeholder="Enter location">
-                    <button class="go pointer">Go</button>
-                    <button class="my-location pointer">My Location</button>
+                    <button class="go pointer button">Go</button>
+                    <button class="my-location pointer button">My Location</button>
                 </div>
             </div>
         </header>
         <main>
-            <div class="container">
+            <div class="main container">
                 <div class="curr-location-bar flex space-between align-center">
-                    <div class="curr-location">Location:</div>
-                    <button class="pointer">Copy Location</button>
+                    <div class="curr-location">Location:
+                        <span class="address">
+                        </span>
+                    </div>
+                    <button class="pointer button">Copy Location</button>
                 </div>
                 <div class="main-content-container grid">
                     <div class="location-table">Location Table</div>
@@ -33,7 +36,6 @@
                     <div class="map-container">Map</div>
                 </div>
             </div>
-
         </main>
         <footer class="footer flex column align-center">
             <small>©Gazorpazorp85 for Vandaley Industries</small>
@@ -59,7 +61,14 @@
     </div>
     
     <script src="https://kit.fontawesome.com/aa5b8f9a54.js" crossorigin="anonymous"></script>
-    <script src="js/generalFunc.js"></script>
+    <script src="lib/swal.js"></script>
+    <script src="lib/axios.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG9ilTxQ0yEVAEA7Flkd-3RqvEqt6F52A"
+                       type="text/javascript"></script>
+    <script src="Model/Location.js"></script>
+    <script src="cmps/LocationPreview.js"></script>
+    <script src="js/mapService.js"></script>
+    <script src="js/mapController.js"></script>
     <script src="js/main.js"></script>
 </body>
 

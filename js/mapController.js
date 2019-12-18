@@ -1,6 +1,6 @@
 'use strict'
 
-var map, infoWindow;
+let map, marker;
 
 function initMap() {
 
@@ -13,16 +13,20 @@ function initMap() {
     elMyLocationControlDiv.classList.add('my-location-button');
     elMyLocationControlDiv.classList.add('pointer');
     elMyLocationControlDiv.title = 'Return to current location';
-    elMyLocationControlDiv.addEventListener('click', () => {getPosition()})
+    elMyLocationControlDiv.addEventListener('click', () => { getPosition() })
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(elMyLocationControlDiv);
 
     map.addListener("click", function (event) {
-        var latitude = event.latLng.lat();
-        var longitude = event.latLng.lng();
+        let latitude = event.latLng.lat();
+        let longitude = event.latLng.lng();
         onShowSwall(latitude, longitude);
     });
 
-    infoWindow = new google.maps.InfoWindow;
+    marker = new google.maps.Marker({
+        map: map,
+        position: { lat: -34.397, lng: 150.644 },
+        icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
+    });
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -30,31 +34,15 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
+            marker.setPosition(pos);
             map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
+            showCurrLocation(pos.lat, pos.lng);
         });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
     }
-
-}
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
 }
 
 function getPosition() {
-    navigator.geolocation.getCurrentPosition(showLocation, handleLocationError);
+    navigator.geolocation.getCurrentPosition(showLocation);
 }
 
 function showLocation(position) {
@@ -84,6 +72,7 @@ function onShowSwall(latitude, longitude) {
                     'success'
                 );
                 addLocation(latitude, longitude);
+                showCurrLocation(latitude, longitude);
                 renderLocations();
             }
         });

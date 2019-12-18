@@ -19,7 +19,6 @@ class LocationPreview {
                             <div>${location.lat}</div>
                             <div>${location.long}</div>
                             <button class="show">show</button>
-                            <button class="update">Update</button>
                             <button class="delete">delete</button>`
         elDiv.querySelector('.show').onclick = this.onShowSavedLocation;
         elDiv.querySelector('.delete').onclick = this.onDeleteLocation;
